@@ -1,15 +1,63 @@
-# fl_add_to_calender_plus
+# Fidenz Add To Calendar Plugin
 
-A new Flutter plugin project.
+## Android Integration
 
-## Getting Started
+The following will need to be added to the `AndroidManifest.xml` file for your application to indicate permissions to modify calendars are needed
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/to/develop-plugins),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+```xml
+<uses-permission android:name="android.permission.READ_CALENDAR" />
+<uses-permission android:name="android.permission.WRITE_CALENDAR" />
+```
+## iOS Integration
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+For iOS 10+ support, you'll need to modify the `Info.plist` to add the following key/value pair
+
+```xml
+<key>NSCalendarsUsageDescription</key>
+<string>Access most functions for calendar viewing and editing.</string>
+```
+
+For iOS 17+ support, add the following key/value pair as well.
+
+```xml
+<key>NSCalendarsFullAccessUsageDescription</key>
+<string>Access most functions for calendar viewing and editing.</string>
+```
+
+Update the Podfile to include the necessary build settings for enabling calendar permissions by adding the following code inside the post_install block
+
+```ruby
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    flutter_additional_ios_build_settings(target)
+
+    // Add this after permission_handler installed on your project
+    target.build_configurations.each do |config|
+      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+        '$(inherited)',
+        'PERMISSION_EVENTS_FULL_ACCESS=1',
+      ]
+    end
+
+  end
+end
+```
+
+
+## Use it
+
+```dart
+import 'package:add_2_calendar/add_2_calendar.dart';
+
+final Event event = Event(
+    title: 'Calendar event',
+    startTime: '2024-12-28T10:30:00',
+    endTime: '2024-12-28T11:30:00',
+    eventTimeZone: timezone
+);
+...
+FlAddToCalender.addEvent(context, event);
+...
+```
+
 
