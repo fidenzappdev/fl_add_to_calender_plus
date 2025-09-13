@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -61,6 +60,5 @@ class MethodChannelFlAddToCalenderPlus extends FlAddToCalenderPlusPlatform {
     String formattedDate =
     DateFormat('yyyy-MM-dd HH:mm:ss').format(localDateTime);
     return formattedDate;
-    return "";
   }
 }

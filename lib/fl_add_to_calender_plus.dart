@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'fl_add_to_calender_plus_platform_interface.dart';
 
 class DeviceCalendar {
   final String id;
@@ -96,7 +95,6 @@ class FlAddToCalenderPlus {
       {required String eventId,
         required Event event,
         Function? onError,
-        Function? onSubmitted,
         Function? onPermissionDenied}) async {
     try {
       String id = await _channel.invokeMethod('updateEvent', {
